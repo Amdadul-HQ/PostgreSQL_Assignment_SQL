@@ -1,3 +1,4 @@
+-- Active: 1742555082889@@127.0.0.1@5432@bookstre_db
 -- Create A books Table 
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,  -- Unique identifier for each book
