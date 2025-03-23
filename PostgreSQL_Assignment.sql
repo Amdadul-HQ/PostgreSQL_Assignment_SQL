@@ -54,3 +54,20 @@ VALUES
 (1, 3, 2, '2024-03-05');
 
 SELECT * FROM orders;
+
+
+-- Find books that are out of stock.
+SELECT title FROM books WHERE books.stock = 0;
+
+
+-- Retrieve the most expensive book in the store.
+SELECT * FROM books ORDER BY price DESC LIMIT 1;
+
+-- Find the total number of orders placed by each customer.
+SELECT name,count(orders.id) AS total_orders FROM orders 
+JOIN customers ON customers.id = orders.customer_id GROUP BY customers.name;
+
+-- Calculate the total revenue generated from book sales.
+SELECT sum(books.price * orders.quantity) AS total_revenue FROM orders JOIN books ON books.id = orders.book_id;
+
+-- 
