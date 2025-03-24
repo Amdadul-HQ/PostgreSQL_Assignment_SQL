@@ -108,8 +108,14 @@ UPDATE books
 SET price = ROUND(price * 1.10, 2)
 WHERE published_year < 2000;
 
+-- View all books
+SELECT * FROM books;
+
 --  Delete customers who haven't placed any orders
 DELETE FROM customers
 WHERE NOT EXISTS (
     SELECT 1 FROM orders WHERE orders.customer_id = customers.id
 );
+
+-- View all customers
+SELECT * FROM customers;
