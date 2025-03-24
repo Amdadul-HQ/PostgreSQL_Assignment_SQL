@@ -57,17 +57,38 @@ SELECT * FROM orders;
 
 
 -- Find books that are out of stock.
-SELECT title FROM books WHERE books.stock = 0;
+SELECT title FROM books 
+WHERE books.stock = 0;
 
 
 -- Retrieve the most expensive book in the store.
-SELECT * FROM books ORDER BY price DESC LIMIT 1;
+SELECT * FROM books 
+ORDER BY price DESC LIMIT 1;
 
 -- Find the total number of orders placed by each customer.
 SELECT name,count(orders.id) AS total_orders FROM orders 
 JOIN customers ON customers.id = orders.customer_id GROUP BY customers.name;
 
 -- Calculate the total revenue generated from book sales.
-SELECT sum(books.price * orders.quantity) AS total_revenue FROM orders JOIN books ON books.id = orders.book_id;
+SELECT sum(books.price * orders.quantity) AS total_revenue FROM orders 
+JOIN books ON books.id = orders.book_id;
 
--- 
+-- List all customers who have placed more than one order.
+SELECT customers.name,count(*) AS orders_count FROM customers 
+JOIN orders ON orders.customer_id = customers.id 
+GROUP BY customers.id HAVING count(*)>1;
+
+
+-- Find the average price of books in the store.
+SELECT ROUND(AVG(price), 2) AS avg_book_price FROM books;
+
+--  Increase the price of all books published before 2000 by 10%.
+UPDATE books SET price = ROUND(price * 1.10,2)
+WHERE published_year < 2000;
+
+
+--  Delete customers who haven't placed any orders.
+DELETE FROM customers
+WHERE NOT EXISTS (
+    SELECT 1 FROM orders WHERE orders.customer_id = customers.id
+);
